@@ -133,7 +133,10 @@ module Wasabi
     end
 
     def parse_operations
-      operations = document.xpath('wsdl:definitions/wsdl:binding/wsdl:operation', 'wsdl' => WSDL)
+      # Nursys WSDL has PortType instead of bindings. Using double slash per
+      # this issue:
+      # https://github.com/savonrb/savon/issues/702#issuecomment-278451010
+      operations = document.xpath('wsdl:definitions//wsdl:operation', 'wsdl' => WSDL)
       operations.each do |operation|
         name = operation.attribute('name').to_s
 
